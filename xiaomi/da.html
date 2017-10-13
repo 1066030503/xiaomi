@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>放大镜</title>
+		<title>首页</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="css/public.css" />
+	<link rel="stylesheet" type="text/css" href="css/index.css" />
+	<script type="text/javascript" src = "js/jquery-1.11.1.js"></script>
+	<script type="text/javascript" src = "js/jquery.cookie.js"></script>
+	<script type="text/javascript" src = "js/bootstrap.js"></script>
+	<script type="text/javascript" src = "js/index.js"></script>
+	</head>
+	<style type="text/css">
+		#da{
+			width: auto;
+			height: 500px;
+		}
+		#img1{
+			height: 200px;width: 200px;
+		}
+		#da{width: 200px;height: 200px;}
+		#div1 { width: 200px; height: 200px; padding: 5px; border: 1px solid #ccc; position: relative; }
+
+		#div1 .small_pic { width: 200px; height: 200px; background: #eee; position: relative; }
+		#div1 .float_layer { width: 50px; height: 50px; border: 1px solid #000; background: #fff; filter: alpha(opacity: 30); opacity: 0.3; position: absolute; top: 0; left: 0; display:none; }
+		#div1 .mark {width:100%; height:100%; position:absolute; z-index:2; left:0px; top:0px; background:red; filter: alpha(opacity:0); opacity:0;}
+		#div1 .big_pic { position: absolute; top: -1px; left: 215px; width:250px; height:250px;  border:2px solid #CCC; display:none; overflow: hidden;}
+		#div1 .big_pic img { position:absolute; top: -30px; left: -80px;}
+		
+		</style>
+		<script type="text/javascript">
+		window.onload = function(){
+			var oDiv = document.getElementById("div1");
+			var oMark = oDiv.getElementsByClassName("mark")[0];
+			var oFloat = oDiv.getElementsByClassName("float_layer")[0];
+			var oBig = oDiv.getElementsByClassName("big_pic")[0];
+			var oSmall = oDiv.getElementsByClassName("small_pic")[0];
+			var oImg = oBig.getElementsByTagName("img")[0]
+
+			//1、给遮罩层添加移入移除事件
+			oMark.onmouseover = function(){
+				//将小滑块显示出来
+				//放大的区域也显示出来
+				oFloat.style.display = "block";
+				oBig.style.display = "block";
+			}
+			oMark.onmouseout = function(){
+				oFloat.style.display = "none";
+				oBig.style.display = "none";
+			}
+
+			//让小滑块跟着鼠标移动
+			oMark.onmousemove = function(even){
+				var e = even || window.event;
+				//让小块居中
+				var l = e.clientX - oDiv.offsetLeft - oSmall.offsetLeft - oFloat.offsetWidth / 2;
+				var t = e.clientY - oDiv.offsetTop - oSmall.offsetTop - oFloat.offsetHeight / 2;
+				//document.title = l + ", " + t;
+
+				//限制块不能出界
+				if(l < 0){
+					l = 0
+				}else if(l > oMark.offsetWidth - oFloat.offsetWidth){
+					l = oMark.offsetWidth - oFloat.offsetWidth;
+				}
+
+				if(t < 0){
+					t = 0;
+				}else if(t > oMark.offsetHeight - oFloat.offsetHeight){
+					t = oMark.offsetHeight - oFloat.offsetHeight;
+				}
+
+
+				oFloat.style.left = l + "px";
+				oFloat.style.top = t + "px";
+
+				//让大的图片按比例进行移动
+				//计算大图片和小图片的比例  按照比例来移动大图片的距离
+				var percentX = l / (oMark.offsetWidth - oFloat.offsetWidth);
+				var percentY = t / (oMark.offsetHeight - oFloat.offsetHeight);
+				document.title = percentX + ", " + percentY;
+
+				oImg.style.left = -percentX * (oImg.offsetWidth - oBig.offsetWidth) + "px";
+				oImg.style.top = -percentY * (oImg.offsetHeight - oBig.offsetHeight) + "px";
+				
+			}
+
+			
+
+
+		}
+		</script>
+	<body>
+		<section id="top">
+	<div class="margin">
+		<ul class="top-l">
+			<li><a href="shopping.html">小米商城</a></li>
+			<li><a href="#">MIUI</a></li>
+			<li><a href="#">米聊</a></li>
+			<li><a href="#">游戏</a></li>
+			<li><a href="#">多看阅读</a></li>
+			<li><a href="#">云服务</a></li>
+			<li><a href="#">金融</a></li>
+			<li><a href="#">小米商城移动版</a></li>
+			<li><a href="#">问题反馈</a></li>
+			<li><a href="#">Select Region</a></li>
+		</ul>
+		<ul class="top-r">
+			<li><a href="land.html" id="land">登陆</a></li>
+			<li><a href="login.html" id="register">注册</a></li>
+			<li><a href="#" id="news">消息通知</a></li>
+			<li><a href="up.html" id="cart"><span class="glyphicon glyphicon-shopping-cart"></span> 购物车（<span class="num">0</span>）</a></li>	
+		</ul>
+	</div>
+</section>
+<header>
+	<div class="margin">
+		<a id="logo" href="#"><img src="images/logo-footer.png" /></a>
+		<ul class="header-c">	
+			<li class="have header-c-a"><a href="da.html">小米手机</a></li>
+			<li class="have header-c-a"><a>红米</a></li>
+			<li class="have header-c-a"><a>平板·笔记本</a></li>
+			<li class="have header-c-a"><a>电视</a></li>
+			<li class="have header-c-a"><a>盒子·影音</a></li>
+			<li class="have header-c-a"><a>路由器</a></li>
+			<li class="have header-c-a"><a>智能硬件</a></li>
+			<li class="header-c-a"><a href="#">服务</a></li>
+			<li class="header-c-a"><a href="#">社区</a></li>
+			<i id="top_details">
+				<dl class="margin"></dl>
+			</i>
+		</ul>
+		<div class="search">
+			<input type="text" class="txt" />
+			<input type="button" class="btn" />
+		</div>
+	</div>
+</header>
+	
+<div id = "da">
+<div id="div1">
+		    <div class="small_pic">
+		    	<!-- 遮罩层 -->
+				<span class="mark"></span>
+				<!-- 小滑块 -->
+		        <span class="float_layer"></span>
+		        <img src="images/xiaot1.jpg" alt="放大镜图片一" longdesc="http://www.miaov.com" id="img1" />
+		    </div>
+
+		    <div class="big_pic">
+				<img src="images/xiaot2.jpg" alt="放大镜图片二" longdesc="http://www.miaov.com" />
+			</div>
+</div>
+
+</div>	
+
+
+
+
+<section id="bottom">
+	<div class="margin">
+		<h3><p><a href="#">预约维修服务</a></p><span>|</span><p><a href="#">7天无理由退货</a></p><span>|</span><p><a href="#">15天免费换货</a></p><span>|</span><p><a href="#">满150元包邮</a></p><span>|</span><p><a href="#">520余家售后网点</a></p></h3>
+		<div>
+			<ul>
+				<li>
+					<h4>帮助中心</h4>
+					<p><a href="#">账户管理</a></p>
+					<p><a href="#">购物指南</a></p>
+					<p><a href="#">订单操作</a></p>
+				</li>
+				<li>
+					<h4>服务支持</h4>
+					<p><a href="#">售后政策</a></p>
+					<p><a href="#">自助服务</a></p>
+					<p><a href="#">相关下载</a></p>
+				</li>
+				<li>
+					<h4>线下门店</h4>
+					<p><a href="#">小米之家</a></p>
+					<p><a href="#">服务网点</a></p>
+					<p><a href="#">零售网点</a></p>
+				</li>
+				<li>
+					<h4>关于小米</h4>
+					<p><a href="#">了解小米</a></p>
+					<p><a href="#">加入小米</a></p>
+					<p><a href="#">联系我们</a></p>
+				</li>
+				<li>
+					<h4>关注我们</h4>
+					<p><a href="#">新浪微博</a></p>
+					<p><a href="#">小米部落</a></p>
+					<p><a href="#">官方微信</a></p>
+				</li>
+				<li>
+					<h4>特色服务</h4>
+					<p><a href="#">F码通道</a></p>
+					<p><a href="#">礼物码</a></p>
+					<p><a href="#">防伪查询</a></p>
+				</li>
+			</ul>
+			<img src="images/bottom-r.jpg" />
+		</div>
+	</div>
+</section>
+<footer>
+	<div class="margin">
+		<img src="images/footer.jpg" />
+	</div>
+</footer>
+
+
+</body>
+</html>
